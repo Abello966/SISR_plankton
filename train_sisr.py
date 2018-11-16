@@ -49,7 +49,7 @@ def AlexNetCNN(in_shape):
 
 #Carrega Dados
 from sklearn.model_selection import train_test_split
-dataset = np.load("dataset_black.npy")
+dataset = np.load("train_dataset_black_full.npy")
 X = dataset[:,1,:,:]
 Y = dataset[:,0,:,:]
 X = X.reshape(X.shape + (1,))
@@ -61,7 +61,7 @@ opt = Adam()
 model.compile(loss='mean_squared_error', optimizer=opt, metrics=['mean_squared_error'])
 
 early_stop = EarlyStopping(monitor='loss', patience=3, verbose=1)
-checkpoint = ModelCheckpoint("CNNSISR_black", monitor='val_loss', verbose=0, save_best_only=True)
+checkpoint = ModelCheckpoint("CNNSISR_black_1_tol", monitor='val_loss', verbose=0, save_best_only=True)
 callback_list = [early_stop, checkpoint]
 
 model.fit(X_train, y_train, batch_size=64, epochs=20, verbose=1, callbacks=callback_list, validation_data=(X_test, y_test))
